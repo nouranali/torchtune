@@ -399,7 +399,7 @@ class KDRecipeSingleDevice(FTRecipeInterface):
             training.set_activation_checkpointing(
                 model, auto_wrap_policy={modules.TransformerSelfAttentionLayer}
             )
-
+        
         base_missing, base_unexpected = model.load_state_dict(
             base_model_state_dict, strict=False
         )
@@ -449,7 +449,7 @@ class KDRecipeSingleDevice(FTRecipeInterface):
     ) -> nn.Module:
         with training.set_default_dtype(self._dtype), self._device:
             model = config.instantiate(model_cfg)
-
+        model_state_dict = {k:v for k,v in model.named_parameters()}
         model.load_state_dict(model_state_dict)
 
         # Put model in eval mode.
